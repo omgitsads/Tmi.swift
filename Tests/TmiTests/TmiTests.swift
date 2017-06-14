@@ -12,13 +12,13 @@ import XCTest
 
 class TmiTests: XCTestCase {
     func testExample() {
-        let client = TMIClient(username: "", password: "", channels: [""])
+        let client = Client(username: "omgitsads", password: "***REMOVED***", channels: ["dotastarladder_en"])
         let expect = expectation(description: "Should authenticate")
         
         client.connect()
         
         
-        waitForExpectations(timeout: 3) { (error) in
+        waitForExpectations(timeout: 80) { (error) in
             if let err = error {
                 XCTFail("Error occured: \(err.localizedDescription)")
             }

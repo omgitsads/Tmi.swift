@@ -9,15 +9,18 @@
 import Foundation
 import Starscream
 
-class TMIChatEvent {
+class ChatEvent {
     
 }
 
-class TMIClient: WebSocketDelegate {
+class Client: WebSocketDelegate {
     var username: String
     var password: String
     var channels = Array<String>()
     var webSocket: WebSocket
+    
+    var pingLoop: Timer?
+    var pingTimeout: Timer?
     
     init(username: String, password: String, channels: Array<String>) {
         self.username = username
@@ -51,6 +54,54 @@ class TMIClient: WebSocketDelegate {
     }
 
     func websocketDidReceiveMessage(socket: WebSocket, text: String) {
-        print(text)
+        let messages = text.components(separatedBy: "\r\n")
+        
+        for messageString in messages {
+            if messageString == "" { break }
+            
+            let message = Message(messageString)
+            
+            if message.prefix == nil {
+                switch message.command {
+                case "PING":
+                    socket.write(string: "PONG")
+                case "PONG":
+                    self.pingTimeout?.invalidate()
+                    self.pingTimeout = nil
+                    break
+                default:
+                    debugPrint("Could not parse message with no prefix")
+                }
+            } else if message.prefix == "tmi.twitch.tv" {
+                switch message.command {
+                case "002", "003", "004", "375", "376":
+                    break
+                case "001":
+                    self.username = message.params[0]
+                    break
+                case "372":
+                    debugPrint("Connected to server.")
+                    
+                    self.pingLoop = Timer.scheduledTimer(withTimeInterval: 60, repeats: true, block: { (timer) in
+                        if(socket.isConnected) {
+                            socket.write(string: "PING")
+                        }
+                        
+                        self.pingTimeout = Timer.scheduledTimer(withTimeInterval: 10, repeats: false, block: { (timer) in
+                            socket.disconnect()
+                            
+                            self.pingLoop?.invalidate()
+                            self.pingLoop = nil
+                            
+                            self.pingTimeout?.invalidate()
+                            self.pingTimeout = nil
+                        })
+                    })
+                    break
+                default:
+                    break
+                }
+            }
+        }
     }
 }

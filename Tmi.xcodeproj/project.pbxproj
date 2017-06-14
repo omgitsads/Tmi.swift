@@ -14,20 +14,11 @@
 		8933C7901EB5B82D000D00A4 /* TmiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933C7891EB5B82A000D00A4 /* TmiTests.swift */; };
 		8CD0062E1ECED62A00915E95 /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD0062C1ECED62A00915E95 /* Client.swift */; };
 		8CD0062F1ECED62A00915E95 /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD0062C1ECED62A00915E95 /* Client.swift */; };
-		8CD006321ECED62A00915E95 /* Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD0062D1ECED62A00915E95 /* Connection.swift */; };
-		8CD006331ECED62A00915E95 /* Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD0062D1ECED62A00915E95 /* Connection.swift */; };
 		8CD006381ECED6BF00915E95 /* Starscream.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CD006371ECED6BF00915E95 /* Starscream.framework */; };
 		8CD0063A1ECED6CB00915E95 /* Starscream.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CD006391ECED6CB00915E95 /* Starscream.framework */; };
 		8CD0063E1ECEDB2000915E95 /* Starscream.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8CD006371ECED6BF00915E95 /* Starscream.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8CD0063F1ECEDB2800915E95 /* Starscream.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8CD006391ECED6CB00915E95 /* Starscream.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		8CD006421ECF137500915E95 /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CD006401ECF137500915E95 /* ReactiveSwift.framework */; };
-		8CD006431ECF137500915E95 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CD006411ECF137500915E95 /* Result.framework */; };
-		8CD006441ECF137900915E95 /* ReactiveSwift.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8CD006401ECF137500915E95 /* ReactiveSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		8CD006451ECF137900915E95 /* Result.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8CD006411ECF137500915E95 /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		8CD0064A1ECF139800915E95 /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CD006481ECF139800915E95 /* ReactiveSwift.framework */; };
-		8CD0064B1ECF139800915E95 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CD006491ECF139800915E95 /* Result.framework */; };
-		8CD0064C1ECF13A100915E95 /* ReactiveSwift.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8CD006481ECF139800915E95 /* ReactiveSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		8CD0064D1ECF13A100915E95 /* Result.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8CD006491ECF139800915E95 /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8CD0064F1ED4985500915E95 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD0064E1ED4985500915E95 /* Message.swift */; };
 		DD7502881C68FEDE006590AF /* Tmi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6DA0F1BF000BD002C0205 /* Tmi.framework */; };
 /* End PBXBuildFile section */
 
@@ -56,8 +47,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				8CD0063E1ECEDB2000915E95 /* Starscream.framework in CopyFiles */,
-				8CD006441ECF137900915E95 /* ReactiveSwift.framework in CopyFiles */,
-				8CD006451ECF137900915E95 /* Result.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,8 +57,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				8CD0063F1ECEDB2800915E95 /* Starscream.framework in CopyFiles */,
-				8CD0064C1ECF13A100915E95 /* ReactiveSwift.framework in CopyFiles */,
-				8CD0064D1ECF13A100915E95 /* Result.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,13 +69,9 @@
 		8933C7841EB5B820000D00A4 /* Tmi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tmi.swift; sourceTree = "<group>"; };
 		8933C7891EB5B82A000D00A4 /* TmiTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TmiTests.swift; sourceTree = "<group>"; };
 		8CD0062C1ECED62A00915E95 /* Client.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
-		8CD0062D1ECED62A00915E95 /* Connection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Connection.swift; sourceTree = "<group>"; };
 		8CD006371ECED6BF00915E95 /* Starscream.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Starscream.framework; path = Carthage/Build/iOS/Starscream.framework; sourceTree = "<group>"; };
 		8CD006391ECED6CB00915E95 /* Starscream.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Starscream.framework; path = Carthage/Build/Mac/Starscream.framework; sourceTree = "<group>"; };
-		8CD006401ECF137500915E95 /* ReactiveSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveSwift.framework; path = Carthage/Build/iOS/ReactiveSwift.framework; sourceTree = "<group>"; };
-		8CD006411ECF137500915E95 /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
-		8CD006481ECF139800915E95 /* ReactiveSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveSwift.framework; path = Carthage/Build/Mac/ReactiveSwift.framework; sourceTree = "<group>"; };
-		8CD006491ECF139800915E95 /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/Mac/Result.framework; sourceTree = "<group>"; };
+		8CD0064E1ED4985500915E95 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		AD2FAA261CD0B6D800659CF4 /* Tmi.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Tmi.plist; sourceTree = "<group>"; };
 		AD2FAA281CD0B6E100659CF4 /* TmiTests.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TmiTests.plist; sourceTree = "<group>"; };
 		DD75027A1C68FCFC006590AF /* Tmi-macOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tmi-macOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -100,8 +83,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8CD006381ECED6BF00915E95 /* Starscream.framework in Frameworks */,
-				8CD006421ECF137500915E95 /* ReactiveSwift.framework in Frameworks */,
-				8CD006431ECF137500915E95 /* Result.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,9 +98,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8CD0064B1ECF139800915E95 /* Result.framework in Frameworks */,
 				8CD0063A1ECED6CB00915E95 /* Starscream.framework in Frameworks */,
-				8CD0064A1ECF139800915E95 /* ReactiveSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -169,8 +148,8 @@
 			isa = PBXGroup;
 			children = (
 				8CD0062C1ECED62A00915E95 /* Client.swift */,
-				8CD0062D1ECED62A00915E95 /* Connection.swift */,
 				8933C7841EB5B820000D00A4 /* Tmi.swift */,
+				8CD0064E1ED4985500915E95 /* Message.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -196,8 +175,6 @@
 		8CD006461ECF138200915E95 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
-				8CD006401ECF137500915E95 /* ReactiveSwift.framework */,
-				8CD006411ECF137500915E95 /* Result.framework */,
 				8CD006371ECED6BF00915E95 /* Starscream.framework */,
 			);
 			name = iOS;
@@ -206,8 +183,6 @@
 		8CD006471ECF138800915E95 /* macOS */ = {
 			isa = PBXGroup;
 			children = (
-				8CD006481ECF139800915E95 /* ReactiveSwift.framework */,
-				8CD006491ECF139800915E95 /* Result.framework */,
 				8CD006391ECED6CB00915E95 /* Starscream.framework */,
 			);
 			name = macOS;
@@ -408,7 +383,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8CD0062E1ECED62A00915E95 /* Client.swift in Sources */,
-				8CD006321ECED62A00915E95 /* Connection.swift in Sources */,
 				8933C7851EB5B820000D00A4 /* Tmi.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -425,8 +399,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8CD0064F1ED4985500915E95 /* Message.swift in Sources */,
 				8CD0062F1ECED62A00915E95 /* Client.swift in Sources */,
-				8CD006331ECED62A00915E95 /* Connection.swift in Sources */,
 				8933C7861EB5B820000D00A4 /* Tmi.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -647,7 +621,7 @@
 				INFOPLIST_FILE = Configs/Tmi.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Tmi.Tmi-macOS";
 				PRODUCT_NAME = Tmi;
 				SDKROOT = macosx;
@@ -674,7 +648,7 @@
 				INFOPLIST_FILE = Configs/Tmi.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Tmi.Tmi-macOS";
 				PRODUCT_NAME = Tmi;
 				SDKROOT = macosx;
@@ -691,7 +665,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = Configs/TmiTests.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Tmi.Tmi-macOS-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -706,7 +680,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = Configs/TmiTests.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Tmi.Tmi-macOS-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
