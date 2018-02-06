@@ -13,7 +13,7 @@ class ChatEvent {
     
 }
 
-class Client: WebSocketDelegate {
+class Client: WebSocketDelegate, WebSocketPongDelegate {
     var username: String
     var password: String
     var channels = Array<String>()
@@ -42,18 +42,23 @@ class Client: WebSocketDelegate {
         self.webSocket.write(string: "NICK \(username)")
         self.webSocket.write(string: "USER \(username) 8 * :\(username)")
     }
-
-    func websocketDidConnect(socket: WebSocket) {
+    
+    func websocketDidConnect(socket: WebSocketClient) {
         self.authenticate(username: self.username, password: self.password)
     }
-
-    func websocketDidDisconnect(socket: WebSocket, error: NSError?) {
+    
+    func websocketDidDisconnect(socket: WebSocketClient, error: Error?) {
+        
+    }
+    
+    func websocketDidReceiveData(socket: WebSocketClient, data: Data) {
+    }
+    
+    func websocketDidReceivePong(socket: WebSocketClient, data: Data?) {
+        
     }
 
-    func websocketDidReceiveData(socket: WebSocket, data: Data) {
-    }
-
-    func websocketDidReceiveMessage(socket: WebSocket, text: String) {
+    func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {
         let messages = text.components(separatedBy: "\r\n")
         
         for messageString in messages {
