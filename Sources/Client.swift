@@ -13,7 +13,7 @@ class ChatEvent {
     
 }
 
-class Client: WebSocketDelegate, WebSocketPongDelegate {
+class TmiClient: WebSocketDelegate, WebSocketPongDelegate {
     var username: String
     var password: String
     var channels = Array<String>()
@@ -21,6 +21,7 @@ class Client: WebSocketDelegate, WebSocketPongDelegate {
     
     var pingLoop: Timer?
     var pingTimeout: Timer?
+    var latency: Date?
     
     init(username: String, password: String, channels: Array<String>) {
         self.username = username
@@ -55,7 +56,7 @@ class Client: WebSocketDelegate, WebSocketPongDelegate {
     }
     
     func websocketDidReceivePong(socket: WebSocketClient, data: Data?) {
-        
+        print("Got pong! Maybe some data: \(data?.count)")
     }
 
     func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {
@@ -69,7 +70,9 @@ class Client: WebSocketDelegate, WebSocketPongDelegate {
             if message.prefix == nil {
                 switch message.command {
                 case "PING":
-                    socket.write(string: "PONG")
+                    if(socket.isConnected){
+                        socket.write(string: "PONG")
+                    }
                 case "PONG":
                     self.pingTimeout?.invalidate()
                     self.pingTimeout = nil
@@ -92,7 +95,8 @@ class Client: WebSocketDelegate, WebSocketPongDelegate {
                             socket.write(string: "PING")
                         }
                         
-                        self.pingTimeout = Timer.scheduledTimer(withTimeInterval: 10, repeats: false, block: { (timer) in
+                        self.latency = Date()
+                        self.pingTimeout = Timer.scheduledTimer(withTimeInterval: 9.99, repeats: false, block: { (timer) in
                             socket.disconnect()
                             
                             self.pingLoop?.invalidate()
