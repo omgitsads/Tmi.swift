@@ -23,7 +23,7 @@ public class TmiClient: WebSocketDelegate, WebSocketPongDelegate {
     var pingTimeout: Timer?
     var latency: Date?
     
-    init(username: String, password: String, channels: Array<String>) {
+    public init(username: String, password: String, channels: Array<String>) {
         self.username = username
         self.password = password
         
@@ -33,7 +33,7 @@ public class TmiClient: WebSocketDelegate, WebSocketPongDelegate {
         self.webSocket.delegate = self
     }
 
-    func connect() {
+    public func connect() {
         self.webSocket.connect()
     }
 
