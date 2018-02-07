@@ -28,6 +28,8 @@ public class TmiClient: WebSocketDelegate {
     
     public var onConnect: (()->Void)?
     
+    public var onChatMessage: ((_ channel:String, _ user: [String: String], _ message: String, _ isSelf: Bool) -> Void)?
+    
     public init(username: String, password: String, channels: Array<String>) {
         self.username = username
         self.password = password
@@ -84,6 +86,10 @@ public class TmiClient: WebSocketDelegate {
             
             let message = TmiMessage(messageString)
             
+            let channel = message.params[0]
+            let msg = message.params[1]
+            let msgId = message.tags["msg-id"]
+            
             if message.prefix == nil {
                 switch message.command {
                 case "PING":
@@ -132,14 +138,14 @@ public class TmiClient: WebSocketDelegate {
                     })
                     break
                 case "NOTICE":
-                    switch message.tags["msg-id"] {
+                    switch msgId {
                     default:
                         debugPrint("TODO: Implement NOTICE")
                         break
                     }
                     break
                 case "USERNOTICE":
-                    switch message.tags["msg-id"] {
+                    switch msgId {
                     default:
                         debugPrint("TODO: Implement USERNOTICE")
                         break
@@ -149,7 +155,7 @@ public class TmiClient: WebSocketDelegate {
                     debugPrint("TODO: Implement HOSTTARGET")
                     break
                 case "CLEARCHAT":
-                    switch message.tags["msg-id"] {
+                    switch msgId {
                     default:
                         debugPrint("TODO: Implement CLEARCHAT")
                         break
@@ -208,7 +214,26 @@ public class TmiClient: WebSocketDelegate {
                     debugPrint("TODO: Implement WHISPER")
                     break
                 case "PRIVMSG":
-                    debugPrint("TODO: Implement PRIVMSG")
+                    if let username = message.prefix.components(separatedBy: "!").first {
+                        message.tags["username"] = username
+                        
+                        if msg.range(of: "/^\u{0001}ACTION ([^\u{0001}]+)\u{0001}$/", options: .regularExpression, range: nil, locale: nil) != nil {
+                            message.tags["message-type"] = "action"
+                            
+                            // TODO: Emit Action Message
+                        } else {
+                            if message.tags["bits"] != nil {
+                                // TODO: Handle cheers
+                            } else {
+                                // Regular Chat Message
+                                message.tags["message-type"] = "chat"
+                                
+                                debugPrint("[\(channel)] <\(String(describing: message.tags["username"])): \(msg)")
+                                
+                                self.onChatMessage?(channel, message.tags, msg, false)
+                            }
+                        }
+                    }
                     break
                 default:
                     debugPrint("Could not parse message: \(message.rawMessage)")
