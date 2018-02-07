@@ -72,11 +72,11 @@ public class TmiClient: WebSocketDelegate {
                 case "PING":
                     if(socket.isConnected){
                         socket.write(string: "PONG")
-//                        self.onPing?()
+                        self.onPing?()
                     }
                 case "PONG":
                     let currentLatency = (Date().timeIntervalSinceNow - self.latency!.timeIntervalSinceNow)
-//                    self.onPong?(currentLatency)
+                    self.onPong?(currentLatency)
                     
                     self.pingTimeout?.invalidate()
                     self.pingTimeout = nil
@@ -93,7 +93,7 @@ public class TmiClient: WebSocketDelegate {
                     break
                 case "372":
                     debugPrint("Connected to server.")
-//                    self.onConnect?()
+                    self.onConnect?()
                     
                     self.pingLoop = Timer.scheduledTimer(withTimeInterval: 60, repeats: true, block: { (timer) in
                         if(socket.isConnected) {

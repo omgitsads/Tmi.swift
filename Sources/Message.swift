@@ -97,8 +97,8 @@ public class TmiMessage {
         var pos = position
         let lastPos = self.rawMessage.endIndex
         
-        while pos <= lastPos {
-            let firstChar = rawMessage[pos]
+        while pos < lastPos {
+            let firstChar = self.rawMessage[pos]
             
             if isAsciiValue(character: firstChar, asciiCode: 58) {
                 let nextPos = self.rawMessage.index(after: pos)
