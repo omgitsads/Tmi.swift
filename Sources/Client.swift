@@ -9,11 +9,11 @@
 import Foundation
 import Starscream
 
-class ChatEvent {
+class TmiChatEvent {
     
 }
 
-class TmiClient: WebSocketDelegate, WebSocketPongDelegate {
+public class TmiClient: WebSocketDelegate, WebSocketPongDelegate {
     var username: String
     var password: String
     var channels = Array<String>()
@@ -44,28 +44,28 @@ class TmiClient: WebSocketDelegate, WebSocketPongDelegate {
         self.webSocket.write(string: "USER \(username) 8 * :\(username)")
     }
     
-    func websocketDidConnect(socket: WebSocketClient) {
+    public func websocketDidConnect(socket: WebSocketClient) {
         self.authenticate(username: self.username, password: self.password)
     }
     
-    func websocketDidDisconnect(socket: WebSocketClient, error: Error?) {
+    public func websocketDidDisconnect(socket: WebSocketClient, error: Error?) {
         
     }
     
-    func websocketDidReceiveData(socket: WebSocketClient, data: Data) {
+    public func websocketDidReceiveData(socket: WebSocketClient, data: Data) {
     }
     
-    func websocketDidReceivePong(socket: WebSocketClient, data: Data?) {
+    public func websocketDidReceivePong(socket: WebSocketClient, data: Data?) {
         print("Got pong! Maybe some data: \(data?.count)")
     }
 
-    func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {
+    public func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {
         let messages = text.components(separatedBy: "\r\n")
         
         for messageString in messages {
             if messageString == "" { break }
             
-            let message = Message(messageString)
+            let message = TmiMessage(messageString)
             
             if message.prefix == nil {
                 switch message.command {

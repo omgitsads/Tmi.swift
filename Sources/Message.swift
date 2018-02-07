@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Message {
+public class TmiMessage {
     let rawMessage: String
     
     var tags: [String:String] = [:]
@@ -36,14 +36,14 @@ class Message {
     
     func parsePrefix(position: String.Index) -> String.Index {
         let firstChar = rawMessage[position]
-        let substring = rawMessage.substring(from: position)
+        let substring = rawMessage[position...]
         
         // Extract the message's prefix if present. Prefixes are prepended with a colon..
         if isAsciiValue(character: firstChar, asciiCode: 58) {
             if let nextSpace = substring.range(of: " ") {
                 // Grab the range from the start index + 1, i.e. not including the colon
                 let prefixString = substring[Range(substring.index(after: substring.startIndex)..<nextSpace.lowerBound)]
-                self.prefix = prefixString
+                self.prefix = String(prefixString)
                 
                 return nextSpace.lowerBound
             } else {
@@ -56,7 +56,7 @@ class Message {
     
     func parseTags(position: String.Index) -> String.Index {
         let firstChar = rawMessage[position]
-        let substring = rawMessage.substring(from: position)
+        let substring = rawMessage[position...]
         
         // Check for IRCv3.2 messages
         // http://ircv3.atheme.org/specification/message-tags-3.2
@@ -78,13 +78,13 @@ class Message {
     
     func parseCommand(position: String.Index) -> String.Index {
         if let nextSpace = nextWhitespace(self.rawMessage, from: position) {
-            let command = self.rawMessage.substring(with: Range(position..<nextSpace))
+            let command = self.rawMessage[Range(position..<nextSpace)]
             self.command = command.trimmingCharacters(in: CharacterSet.whitespaces)
             
             return nextSpace
         } else {
             if(self.rawMessage.endIndex > position) {
-                let command = self.rawMessage.substring(from: position)
+                let command = self.rawMessage[position...]
                 self.command = command.trimmingCharacters(in: CharacterSet.whitespaces)
                 return self.rawMessage.endIndex
             }
@@ -102,18 +102,18 @@ class Message {
             
             if isAsciiValue(character: firstChar, asciiCode: 58) {
                 let nextPos = self.rawMessage.index(after: pos)
-                let param = self.rawMessage.substring(with: Range(nextPos..<lastPos))
+                let param = self.rawMessage[Range(nextPos..<lastPos)]
                 
                 self.params.append(param.trimmingCharacters(in: CharacterSet.whitespaces))
                 break
             }
             
             if let nextSpace = nextWhitespace(self.rawMessage, from: pos) {
-                let param = self.rawMessage.substring(with: Range(pos..<nextSpace))
+                let param = self.rawMessage[Range(pos..<nextSpace)]
                 self.params.append(param.trimmingCharacters(in: CharacterSet.whitespaces))
                 pos = nextSpace
             } else {
-                let param = self.rawMessage.substring(with: Range(pos..<lastPos))
+                let param = self.rawMessage[Range(pos..<lastPos)]
                 self.params.append(param.trimmingCharacters(in: CharacterSet.whitespaces))
                 break
             }
