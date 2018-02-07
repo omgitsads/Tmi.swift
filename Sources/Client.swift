@@ -41,6 +41,12 @@ public class TmiClient: WebSocketDelegate {
     public func connect() {
         self.webSocket.connect()
     }
+    
+    public func disconnect() {
+        pingLoop?.invalidate()
+        pingTimeout?.invalidate()
+        webSocket.disconnect()
+    }
 
     func authenticate(username: String, password: String) {
         self.webSocket.write(string: "CAP REQ :twitch.tv/tags twitch.tv/commands twitch.tv/membership");
@@ -97,7 +103,7 @@ public class TmiClient: WebSocketDelegate {
                 }
             } else if message.prefix == "tmi.twitch.tv" {
                 switch message.command {
-                case "002", "003", "004", "375", "376":
+                case "002", "003", "004", "375", "376", "CAP":
                     break
                 case "001":
                     self.username = message.params[0]
