@@ -28,7 +28,7 @@ public class TmiClient: WebSocketDelegate {
     
     public var onConnect: (()->Void)?
     
-    public var onChatMessage: ((_ channel:String, _ user: [String: String], _ message: String, _ isSelf: Bool) -> Void)?
+    public var onChatMessage: ((_ channel:String, _ message: TmiMessage, _ isSelf: Bool) -> Void)?
     
     public init(username: String, password: String, channels: Array<String>) {
         self.username = username
@@ -86,8 +86,9 @@ public class TmiClient: WebSocketDelegate {
             
             let message = TmiMessage(messageString)
             
-            let channel = message.params[0]
-            let msg = message.params[1]
+            let messageParams = message.params
+            let channel = messageParams.indices.contains(0) ? message.params[0] : nil
+            let msg = messageParams.indices.contains(1) ? message.params[1] : nil
             let msgId = message.tags["msg-id"]
             
             if message.prefix == nil {
@@ -217,7 +218,7 @@ public class TmiClient: WebSocketDelegate {
                     if let username = message.prefix.components(separatedBy: "!").first {
                         message.tags["username"] = username
                         
-                        if msg.range(of: "/^\u{0001}ACTION ([^\u{0001}]+)\u{0001}$/", options: .regularExpression, range: nil, locale: nil) != nil {
+                        if msg?.range(of: "/^\u{0001}ACTION ([^\u{0001}]+)\u{0001}$/", options: .regularExpression, range: nil, locale: nil) != nil {
                             message.tags["message-type"] = "action"
                             
                             // TODO: Emit Action Message
@@ -228,9 +229,7 @@ public class TmiClient: WebSocketDelegate {
                                 // Regular Chat Message
                                 message.tags["message-type"] = "chat"
                                 
-                                debugPrint("[\(channel)] <\(String(describing: message.tags["username"])): \(msg)")
-                                
-                                self.onChatMessage?(channel, message.tags, msg, false)
+                                self.onChatMessage?(channel!, message, false)
                             }
                         }
                     }
