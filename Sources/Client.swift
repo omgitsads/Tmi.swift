@@ -75,7 +75,7 @@ public class TmiClient: WebSocketDelegate {
                         self.onPing?()
                     }
                 case "PONG":
-                    let currentLatency = (Date().timeIntervalSinceNow - self.latency!.timeIntervalSinceNow)
+                    let currentLatency = Date().timeIntervalSince(self.latency!)
                     self.onPong?(currentLatency)
                     
                     self.pingTimeout?.invalidate()
@@ -101,19 +101,100 @@ public class TmiClient: WebSocketDelegate {
                         }
                         
                         self.latency = Date()
-                        self.pingTimeout = Timer.scheduledTimer(withTimeInterval: 9.99, repeats: false, block: { (timer) in
-                            socket.disconnect()
-                            
-                            self.pingLoop?.invalidate()
-                            self.pingLoop = nil
-                            
-                            self.pingTimeout?.invalidate()
-                            self.pingTimeout = nil
+                        self.pingTimeout = Timer.scheduledTimer(withTimeInterval: 9.99, repeats: false, block: {[weak self] (timer) in
+                            if let strongSelf = self {
+                                strongSelf.webSocket.disconnect()
+                                
+                                strongSelf.pingLoop?.invalidate()
+                                strongSelf.pingLoop = nil
+                                
+                                strongSelf.pingTimeout?.invalidate()
+                                strongSelf.pingTimeout = nil
+                            }
                         })
                     })
                     break
-                default:
+                case "NOTICE":
+                    switch message.tags["msg-id"] {
+                    default:
+                        debugPrint("TODO: Implement NOTICE")
+                        break
+                    }
                     break
+                case "USERNOTICE":
+                    switch message.tags["msg-id"] {
+                    default:
+                        debugPrint("TODO: Implement USERNOTICE")
+                        break
+                    }
+                    break
+                case "HOSTTARGET":
+                    debugPrint("TODO: Implement HOSTTARGET")
+                    break
+                case "CLEARCHAT":
+                    switch message.tags["msg-id"] {
+                    default:
+                        debugPrint("TODO: Implement CLEARCHAT")
+                        break
+                    }
+                    break
+                case "RECONNECT":
+                    debugPrint("Received RECONNECT request from Twitch..")
+                    socket.disconnect()
+
+                    // TODO: Introduce reconnection decay
+                    debugPrint("Disconnecting and reconnecting in 1 second")
+                    Timer.scheduledTimer(withTimeInterval: 1, repeats: false, block: {[weak self] (timer) in
+                        if let strongSelf = self {
+                            strongSelf.connect()
+                        }
+                    })
+                    break
+                case "SERVERCHANGE":
+                    break
+                case "USERSTATE":
+                    debugPrint("TODO: Implement USERSTATE")
+                    break
+                case "GLOBALUSERSTATE":
+                    debugPrint("TODO: Implement GLOBALUSERSTATE")
+                    break
+                case "ROOMSTATE":
+                    debugPrint("TODO: Implement ROOMSTATE")
+                    break
+                default:
+                    debugPrint("Could not parse message from tmi.twitch.tv:\(message.rawMessage)")
+                    break
+                }
+            } else if message.prefix == "jtv" {
+                switch message.command {
+                case "MODE":
+                    debugPrint("TODO: Implement MODE")
+                    break
+                default:
+                    debugPrint("Could not parse message from jtv: \(message.rawMessage)")
+                    break
+                }
+            } else {
+                switch message.command {
+                case "353":
+                    debugPrint("TODO: Implement 353")
+                    break
+                case "366":
+                    debugPrint("TODO: Implement 366")
+                case "JOIN":
+                    debugPrint("TODO: Implement JOIN")
+                    break
+                case "PART":
+                    debugPrint("TODO: Implement PART")
+                    break
+                case "WHISPER":
+                    debugPrint("TODO: Implement WHISPER")
+                    break
+                case "PRIVMSG":
+                    debugPrint("TODO: Implement PRIVMSG")
+                    break
+                default:
+                    debugPrint("Could not parse message: \(message.rawMessage)")
                 }
             }
         }
