@@ -13,7 +13,7 @@ class TmiChatEvent {
     
 }
 
-public class TmiClient: WebSocketDelegate, WebSocketPongDelegate {
+public class TmiClient: WebSocketDelegate {
     var username: String
     var password: String
     var channels = Array<String>()
@@ -22,6 +22,11 @@ public class TmiClient: WebSocketDelegate, WebSocketPongDelegate {
     var pingLoop: Timer?
     var pingTimeout: Timer?
     var latency: Date?
+    
+    public var onPing: (()->Void)?
+    public var onPong: ((_ latency:TimeInterval) -> Void)?
+    
+    public var onConnect: (()->Void)?
     
     public init(username: String, password: String, channels: Array<String>) {
         self.username = username
@@ -49,14 +54,9 @@ public class TmiClient: WebSocketDelegate, WebSocketPongDelegate {
     }
     
     public func websocketDidDisconnect(socket: WebSocketClient, error: Error?) {
-        
     }
     
     public func websocketDidReceiveData(socket: WebSocketClient, data: Data) {
-    }
-    
-    public func websocketDidReceivePong(socket: WebSocketClient, data: Data?) {
-        print("Got pong! Maybe some data: \(data?.count)")
     }
 
     public func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {
@@ -72,8 +72,12 @@ public class TmiClient: WebSocketDelegate, WebSocketPongDelegate {
                 case "PING":
                     if(socket.isConnected){
                         socket.write(string: "PONG")
+                        self.onPing?()
                     }
                 case "PONG":
+                    let currentLatency = (Date().timeIntervalSinceNow - self.latency!.timeIntervalSinceNow)
+                    self.onPong?(currentLatency)
+                    
                     self.pingTimeout?.invalidate()
                     self.pingTimeout = nil
                     break
@@ -89,6 +93,7 @@ public class TmiClient: WebSocketDelegate, WebSocketPongDelegate {
                     break
                 case "372":
                     debugPrint("Connected to server.")
+                    self.onConnect?()
                     
                     self.pingLoop = Timer.scheduledTimer(withTimeInterval: 60, repeats: true, block: { (timer) in
                         if(socket.isConnected) {
