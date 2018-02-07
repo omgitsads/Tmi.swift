@@ -58,6 +58,8 @@ public class TmiClient: WebSocketDelegate {
         Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { (timer) in
             if let channel = joinQueue.popLast() {
                 self.webSocket.write(string: "JOIN #\(channel)")
+            } else {
+                timer.invalidate()
             }
         }
     }
