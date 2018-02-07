@@ -17,7 +17,6 @@ public class TmiMessage {
     var params: [String] = []
     
     init(_ rawMessage: String) {
-        debugPrint(rawMessage)
         self.rawMessage = rawMessage
         parse()
     }
