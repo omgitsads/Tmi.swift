@@ -229,7 +229,7 @@ public class TmiClient: WebSocketDelegate {
                                 // Regular Chat Message
                                 message.tags["message-type"] = "chat"
                                 
-                                self.onChatMessage?(channel!, message.tags, msg, false)
+                                self.onChatMessage?(channel!, message.tags, msg!, false)
                             }
                         }
                     }
