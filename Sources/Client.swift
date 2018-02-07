@@ -50,7 +50,16 @@ public class TmiClient: WebSocketDelegate {
     }
     
     public func websocketDidConnect(socket: WebSocketClient) {
+        // Authenticate user
         self.authenticate(username: self.username, password: self.password)
+        
+        // Join channels
+        var joinQueue = self.channels
+        Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { (timer) in
+            if let channel = joinQueue.popLast() {
+                self.webSocket.write(string: "JOIN #\(channel)")
+            }
+        }
     }
     
     public func websocketDidDisconnect(socket: WebSocketClient, error: Error?) {
