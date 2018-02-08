@@ -16,7 +16,7 @@ public class TmiMessage {
     var command: String!
     var params: [String] = []
     
-    public var emotes = [Int: [Range<Int>]]()
+    public var emotes = [Int: [Range<String.Index>]]()
     
     init(_ rawMessage: String) {
         self.rawMessage = rawMessage
@@ -50,12 +50,16 @@ public class TmiMessage {
                 let id = Int(idAndEmotes[0])!
                 let emoteRanges = idAndEmotes[1]
                 
-                let ranges = emoteRanges.components(separatedBy: ",").map({ (emoteRange) -> Range<Int> in
+                let ranges = emoteRanges.components(separatedBy: ",").map({ (emoteRange) -> Range<String.Index> in
                     let ranges = emoteRange.components(separatedBy: "-")
-                    let start = Int(ranges[0])!
-                    let end = Int(ranges[1])!
+                    let startInt = Int(ranges[0])!
+                    let endInt = Int(ranges[1])!
                     
-                    return start..<end
+                    let msg = params[1]
+                    let startIndex = msg.index(msg.startIndex, offsetBy: startInt)
+                    let endIndex = msg.index(msg.startIndex, offsetBy: endInt)
+                    
+                    return startIndex..<endIndex
                 })
                 
                 self.emotes[id] = ranges
