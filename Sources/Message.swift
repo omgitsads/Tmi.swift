@@ -57,9 +57,9 @@ public class TmiMessage {
                     
                     let msg = params[1]
                     let startIndex = msg.index(msg.startIndex, offsetBy: startInt)
-                    let endIndex = msg.index(msg.startIndex, offsetBy: endInt)
+                    let endIndex = msg.index(msg.startIndex, offsetBy: endInt+1)
                     
-                    return startIndex..<endIndex
+                    return (startIndex..<endIndex)
                 })
                 
                 self.emotes[id] = ranges
