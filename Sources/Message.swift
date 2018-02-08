@@ -11,12 +11,12 @@ import Foundation
 public class TmiMessage {
     let rawMessage: String
     
-    var tags: [String:String] = [:]
+    public var tags: [String:String] = [:]
     var prefix: String!
     var command: String!
     var params: [String] = []
     
-    var emotes = [Int: [Range<Int>]]()
+    public var emotes = [Int: [Range<Int>]]()
     
     init(_ rawMessage: String) {
         self.rawMessage = rawMessage
