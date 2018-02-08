@@ -16,6 +16,8 @@ public class TmiMessage {
     var command: String!
     var params: [String] = []
     
+    var emotes = [Int: [Range<Int>]]()
+    
     init(_ rawMessage: String) {
         self.rawMessage = rawMessage
         parse()
@@ -31,6 +33,34 @@ public class TmiMessage {
         nextPosition = skipWhitespace(position: nextPosition)
         nextPosition = parseCommand(position: nextPosition)
         nextPosition = parseParams(position: nextPosition)
+        
+        parseEmotes()
+    }
+    
+    func parseEmotes() {
+        if let rawEmotes = self.tags["emotes"] {
+            if rawEmotes == "" {
+                return
+            }
+            
+            let emoteIdAndRange = rawEmotes.components(separatedBy: "/").filter { $0 != "" }
+            let emotesAndRanges = emoteIdAndRange.map { $0.components(separatedBy: ":") }
+            
+            emotesAndRanges.forEach({ (idAndEmotes) in
+                let id = Int(idAndEmotes[0])!
+                let emoteRanges = idAndEmotes[1]
+                
+                let ranges = emoteRanges.components(separatedBy: ",").map({ (emoteRange) -> Range<Int> in
+                    let ranges = emoteRange.components(separatedBy: "-")
+                    let start = Int(ranges[0])!
+                    let end = Int(ranges[1])!
+                    
+                    return start..<end
+                })
+                
+                self.emotes[id] = ranges
+            })
+        }
     }
     
     func parsePrefix(position: String.Index) -> String.Index {
