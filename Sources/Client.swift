@@ -28,7 +28,7 @@ public class TmiClient: WebSocketDelegate {
     
     public var onConnect: (()->Void)?
     
-    public var onChatMessage: ((_ channel:String, _ tags: [String:String], _ message: String, _ isSelf: Bool) -> Void)?
+    public var onChatMessage: ((_ channel:String, _ message: TmiMessage, _ text: String, _ isSelf: Bool) -> Void)?
     
     public init(username: String, password: String, channels: Array<String>) {
         self.username = username
@@ -229,7 +229,7 @@ public class TmiClient: WebSocketDelegate {
                                 // Regular Chat Message
                                 message.tags["message-type"] = "chat"
                                 
-                                self.onChatMessage?(channel!, message.tags, msg!, false)
+                                self.onChatMessage?(channel!, message, msg!, false)
                             }
                         }
                     }
